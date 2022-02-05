@@ -1,6 +1,7 @@
 package assignment
 
 import (
+	"fmt"
 	"math"
 	"testing"
 
@@ -8,6 +9,23 @@ import (
 )
 
 func TestAddUint32(t *testing.T) {
+
+	cases := []struct {
+		given_numbers     [2]uint32
+		expected_result   uint32
+		expected_overflow bool
+	}{
+		{[2]uint32{math.MaxUint32, 1}, 0, true},
+		{[2]uint32{1, 1}, 2, false},
+		{[2]uint32{42, 2701}, 2743, false},
+		{[2]uint32{42, math.MaxUint32}, 41, true},
+		{[2]uint32{4294967290, 5}, 4294967295, false},
+		{[2]uint32{4294967290, 6}, 0, true},
+		{[2]uint32{4294967290, 10}, 4, true},
+	}
+
+	fmt.Println(cases)
+
 	/*
 		Sum uint32 numbers, return uint32 sum value and boolean overflow flag
 		cases need to pass:
@@ -26,6 +44,19 @@ func TestAddUint32(t *testing.T) {
 }
 
 func TestCeilNumber(t *testing.T) {
+
+	cases := []struct {
+		given    float32
+		expected float32
+	}{
+		{42.42, 42.50}, {42, 42}, {42.01, 42.25},
+		{42.24, 42.25}, {42.25, 42.25}, {42.26, 42.50},
+		{42.55, 42.75}, {42.75, 42.75}, {42.76, 43},
+		{42.99, 43}, {43.13, 43.25},
+	}
+
+	fmt.Println(cases)
+
 	/*
 		Ceil the number within 0.25
 		cases need to pass:
@@ -47,6 +78,19 @@ func TestCeilNumber(t *testing.T) {
 }
 
 func TestAlphabetSoup(t *testing.T) {
+
+	cases := []struct {
+		given    string
+		expected string
+	}{
+		{"hello", "ehllo"}, {"", ""},
+		{"h", "h"}, {"ab", "ab"},
+		{"ba", "ab"}, {"bac", "abc"},
+		{"cba", "abc"},
+	}
+
+	fmt.Println(cases)
+
 	/*
 		String with the letters in alphabetical order.
 		cases need to pass:
@@ -64,6 +108,25 @@ func TestAlphabetSoup(t *testing.T) {
 }
 
 func TestStringMask(t *testing.T) {
+
+	cases := []struct {
+		word     string
+		len      int
+		expected string
+	}{
+		{"!mysecret*", 2, "!m********"},
+		{"", 8, "*"},
+		{"a", 1, "*"},
+		{"string", 0, "******"},
+		{"string", 3, "str***"},
+		{"string", 5, "strin*"},
+		{"string", 6, "******"},
+		{"string", 7, "******"},
+		{"s*r*n*", 3, "s*r***"},
+	}
+
+	fmt.Println(cases)
+
 	/*
 		Replace after n(uint) character of string with '*' character.
 		cases need to pass:
@@ -84,6 +147,13 @@ func TestStringMask(t *testing.T) {
 
 func TestWordSplit(t *testing.T) {
 	words := "apple,bat,cat,goodbye,hello,yellow,why"
+
+	cases := []string{
+		"hellocat", "catbat", "yellowapple",
+		"", "notcat", "bootcamprocks!",
+	}
+
+	fmt.Println(cases)
 	/*
 		Your goal is to determine if the first element in the array can be split into two words,
 		where both words exist in the dictionary(words variable) that is provided in the second element of array.
@@ -102,6 +172,15 @@ func TestWordSplit(t *testing.T) {
 }
 
 func TestVariadicSet(t *testing.T) {
+
+	cases := []interface{}{
+		[]interface{}{4, 2, 5, 4, 2, 4},
+		[]interface{}{"bootcamp", "rocks!", "really", "rocks! "},
+		[]interface{}{1, uint32(1), "first", 2, uint32(2), "second", 1, uint32(2), "first"},
+	}
+
+	fmt.Println(cases)
+
 	/*
 		FINAL BOSS ALERT :)
 		Tip: Learn and apply golang variadic functions(search engine -> "golang variadic function" -> WOW You can really dance! )

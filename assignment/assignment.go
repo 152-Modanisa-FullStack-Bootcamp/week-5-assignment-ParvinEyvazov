@@ -1,6 +1,9 @@
 package assignment
 
 func AddUint32(x, y uint32) (uint32, bool) {
+
+	// uint32 : 0 to 4294967295
+
 	return 0, false
 }
 
