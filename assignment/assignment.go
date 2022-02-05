@@ -1,10 +1,9 @@
 package assignment
 
+import "math"
+
 func AddUint32(x, y uint32) (uint32, bool) {
-
-	// uint32 : 0 to 4294967295
-
-	return 0, false
+	return x + y, math.MaxUint32-x < y
 }
 
 func CeilNumber(f float64) float64 {

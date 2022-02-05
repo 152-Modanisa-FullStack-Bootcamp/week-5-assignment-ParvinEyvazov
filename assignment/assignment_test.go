@@ -24,23 +24,16 @@ func TestAddUint32(t *testing.T) {
 		{[2]uint32{4294967290, 10}, 4, true},
 	}
 
-	fmt.Println(cases)
-
-	/*
-		Sum uint32 numbers, return uint32 sum value and boolean overflow flag
-		cases need to pass:
-			math.MaxUint32, 1 => 0, true
-			1, 1 => 2, false
-			42, 2701 => 2743, false
-			42, math.MaxUint32 => 41, true
-			4294967290, 5 => 4294967295, false
-			4294967290, 6 => 0, true
-			4294967290, 10 => 4, true
-	*/
-	sum, overflow := AddUint32(math.MaxUint32, 1)
-
-	assert.Equal(t, uint32(0), sum)
-	assert.True(t, overflow)
+	for _, value := range cases {
+		t.Run(
+			fmt.Sprintf("%v+%v", value.given_numbers[0], value.given_numbers[1]),
+			func(t *testing.T) {
+				result, overflow := AddUint32(value.given_numbers[0], value.given_numbers[1])
+				assert.Equal(t, result, value.expected_result)
+				assert.Equal(t, overflow, value.expected_overflow)
+			},
+		)
+	}
 }
 
 func TestCeilNumber(t *testing.T) {
