@@ -29,8 +29,8 @@ func TestAddUint32(t *testing.T) {
 			fmt.Sprintf("%v+%v", value.given_numbers[0], value.given_numbers[1]),
 			func(t *testing.T) {
 				result, overflow := AddUint32(value.given_numbers[0], value.given_numbers[1])
-				assert.Equal(t, result, value.expected_result)
-				assert.Equal(t, overflow, value.expected_overflow)
+				assert.Equal(t, value.expected_result, result)
+				assert.Equal(t, value.expected_overflow, overflow)
 			},
 		)
 	}
@@ -39,8 +39,8 @@ func TestAddUint32(t *testing.T) {
 func TestCeilNumber(t *testing.T) {
 
 	cases := []struct {
-		given    float32
-		expected float32
+		given    float64
+		expected float64
 	}{
 		{42.42, 42.50}, {42, 42}, {42.01, 42.25},
 		{42.24, 42.25}, {42.25, 42.25}, {42.26, 42.50},
@@ -48,26 +48,14 @@ func TestCeilNumber(t *testing.T) {
 		{42.99, 43}, {43.13, 43.25},
 	}
 
-	fmt.Println(cases)
-
-	/*
-		Ceil the number within 0.25
-		cases need to pass:
-			42.42 => 42.50
-			42 => 42
-			42.01 => 42.25
-			42.24 => 42.25
-			42.25 => 42.25
-			42.26 => 42.50
-			42.55 => 42.75
-			42.75 => 42.75
-			42.76 => 43
-			42.99 => 43
-			43.13 => 43.25
-	*/
-	point := CeilNumber(42.42)
-
-	assert.Equal(t, 42.50, point)
+	for _, value := range cases {
+		t.Run(fmt.Sprintf("%v=>%v", value.given, value.expected),
+			func(t *testing.T) {
+				result := CeilNumber(value.given)
+				assert.Equal(t, value.expected, result)
+			},
+		)
+	}
 }
 
 func TestAlphabetSoup(t *testing.T) {
