@@ -137,25 +137,30 @@ func TestWordSplit(t *testing.T) {
 
 func TestVariadicSet(t *testing.T) {
 
-	cases := []interface{}{
-		[]interface{}{4, 2, 5, 4, 2, 4},
-		[]interface{}{"bootcamp", "rocks!", "really", "rocks! "},
-		[]interface{}{1, uint32(1), "first", 2, uint32(2), "second", 1, uint32(2), "first"},
+	cases := []struct {
+		given    []interface{}
+		expected []interface{}
+	}{
+		{
+			[]interface{}{4, 2, 5, 4, 2, 4},
+			[]interface{}{4, 2, 5},
+		},
+		{
+			[]interface{}{"bootcamp", "rocks!", "really", "rocks!"},
+			[]interface{}{"bootcamp", "rocks!", "really"},
+		},
+		{
+			[]interface{}{1, uint32(1), "first", 2, uint32(2), "second", 1, uint32(2), "first"},
+			[]interface{}{1, uint32(1), "first", 2, uint32(2), "second"},
+		},
 	}
 
-	fmt.Println(cases)
-
-	/*
-		FINAL BOSS ALERT :)
-		Tip: Learn and apply golang variadic functions(search engine -> "golang variadic function" -> WOW You can really dance! )
-
-		Convert inputs to set(no duplicate element)
-		cases need to pass:
-			4,2,5,4,2,4 => []interface{4,2,5}
-			"bootcamp","rocks!","really","rocks! => []interface{"bootcamp","rocks!","really"}
-			1,uint32(1),"first",2,uint32(2),"second",1,uint32(2),"first" => []interface{1,uint32(1),"first",2,uint32(2),"second"}
-	*/
-	set := VariadicSet(4, 2, 5, 4, 2, 4)
-
-	assert.Equal(t, []interface{}{4, 2, 5}, set)
+	for _, v := range cases {
+		t.Run(
+			fmt.Sprintf("%v", v),
+			func(t *testing.T) {
+				result := VariadicSet(v.given...)
+				assert.Equal(t, v.expected, result)
+			})
+	}
 }

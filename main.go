@@ -6,21 +6,31 @@ import (
 )
 
 func main() {
-	words := "apple,bat,cat,goodbye,hello,yellow,why"
-
 	cases := []struct {
-		given    string
-		expected string
+		given    []interface{}
+		expected []interface{}
 	}{
-		{"hellocat", "hello,cat"},
-		{"catbat", "cat,bat"},
-		{"yellowapple", "yellow,apple"},
-		{"", "not possible"},
-		{"notcat", "not possible"},
-		{"bootcamprocks!", "not possible"},
+		{
+			[]interface{}{4, 2, 5, 4, 2, 4},
+			[]interface{}{4, 2, 5},
+		},
+		{
+			[]interface{}{"bootcamp", "rocks!", "really", "rocks!"},
+			[]interface{}{"bootcamp", "rocks!", "really"},
+		},
+		{
+			[]interface{}{1, uint32(1), "first", 2, uint32(2), "second", 1, uint32(2), "first"},
+			[]interface{}{1, uint32(1), "first", 2, uint32(2), "second"},
+		},
 	}
 
-	for _, v := range cases {
-		fmt.Println(assignment.WordSplit([2]string{v.given, words}))
+	result := assignment.VariadicSet(cases[2].given...)
+
+	for _, v := range result {
+		fmt.Printf("%v %T\n", v, v)
 	}
+
+	/* 	for _, v := range cases {
+		fmt.Println(assignment.VariadicSet(v))
+	} */
 }

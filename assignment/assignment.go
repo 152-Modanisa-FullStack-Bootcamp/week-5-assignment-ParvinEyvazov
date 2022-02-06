@@ -74,5 +74,16 @@ Loop:
 }
 
 func VariadicSet(i ...interface{}) []interface{} {
-	return nil
+
+	m := make(map[interface{}]int)
+	result := []interface{}{}
+
+	for _, v := range i {
+		if m[v] == 0 {
+			result = append(result, v)
+		}
+		m[v] = m[v] + 1
+	}
+
+	return result
 }
