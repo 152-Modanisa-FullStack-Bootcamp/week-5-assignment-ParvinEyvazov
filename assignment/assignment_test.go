@@ -72,27 +72,21 @@ func TestAlphabetSoup(t *testing.T) {
 
 	fmt.Println(cases)
 
-	/*
-		String with the letters in alphabetical order.
-		cases need to pass:
-		 	"hello" => "ehllo"
-			"" => ""
-			"h" => "h"
-			"ab" => "ab"
-			"ba" => "ab"
-			"bac" => "abc"
-			"cba" => "abc"
-	*/
-	result := AlphabetSoup("hello")
-
-	assert.Equal(t, "ehllo", result)
+	for _, v := range cases {
+		t.Run(
+			v.given,
+			func(t *testing.T) {
+				result := AlphabetSoup(v.given)
+				assert.Equal(t, v.expected, result)
+			})
+	}
 }
 
 func TestStringMask(t *testing.T) {
 
 	cases := []struct {
 		word     string
-		len      int
+		len      uint
 		expected string
 	}{
 		{"!mysecret*", 2, "!m********"},
@@ -106,50 +100,39 @@ func TestStringMask(t *testing.T) {
 		{"s*r*n*", 3, "s*r***"},
 	}
 
-	fmt.Println(cases)
-
-	/*
-		Replace after n(uint) character of string with '*' character.
-		cases need to pass:
-			"!mysecret*", 2 => "!m********"
-			"", n(any positive number) => "*"
-			"a", 1 => "*"
-			"string", 0 => "******"
-			"string", 3 => "str***"
-			"string", 5 => "strin*"
-			"string", 6 => "******"
-			"string", 7(bigger than len of "string") => "******"
-			"s*r*n*", 3 => "s*r***"
-	*/
-	result := StringMask("!mysecret*", 2)
-
-	assert.Equal(t, "!m********", result)
+	for _, v := range cases {
+		t.Run(
+			fmt.Sprintf("%v => %v", v.word, v.len),
+			func(t *testing.T) {
+				result := StringMask(v.word, v.len)
+				assert.Equal(t, v.expected, result)
+			})
+	}
 }
 
 func TestWordSplit(t *testing.T) {
 	words := "apple,bat,cat,goodbye,hello,yellow,why"
 
-	cases := []string{
-		"hellocat", "catbat", "yellowapple",
-		"", "notcat", "bootcamprocks!",
+	cases := []struct {
+		given    string
+		expected string
+	}{
+		{"hellocat", "hello,cat"},
+		{"catbat", "cat,bat"},
+		{"yellowapple", "yellow,apple"},
+		{"", "not possible"},
+		{"notcat", "not possible"},
+		{"bootcamprocks!", "not possible"},
 	}
 
-	fmt.Println(cases)
-	/*
-		Your goal is to determine if the first element in the array can be split into two words,
-		where both words exist in the dictionary(words variable) that is provided in the second element of array.
-
-		cases need to pass:
-			[2]string{"hellocat",words} => hello,cat
-			[2]string{"catbat",words} => cat,bat
-			[2]string{"yellowapple",words} => yellow,apple
-			[2]string{"",words} => not possible
-			[2]string{"notcat",words} => not possible
-			[2]string{"bootcamprocks!",words} => not possible
-	*/
-	result := WordSplit([2]string{"hellocat", words})
-
-	assert.Equal(t, "hello,cat", result)
+	for _, v := range cases {
+		t.Run(
+			fmt.Sprintf("%v", v),
+			func(t *testing.T) {
+				result := WordSplit([2]string{v.given, words})
+				assert.Equal(t, v.expected, result)
+			})
+	}
 }
 
 func TestVariadicSet(t *testing.T) {

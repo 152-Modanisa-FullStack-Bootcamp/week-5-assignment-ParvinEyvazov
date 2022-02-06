@@ -3,13 +3,24 @@ package main
 import (
 	"bootcamp/assignment"
 	"fmt"
-	"math"
 )
 
 func main() {
+	words := "apple,bat,cat,goodbye,hello,yellow,why"
 
-	result, overflow := assignment.AddUint32(42, math.MaxUint32)
+	cases := []struct {
+		given    string
+		expected string
+	}{
+		{"hellocat", "hello,cat"},
+		{"catbat", "cat,bat"},
+		{"yellowapple", "yellow,apple"},
+		{"", "not possible"},
+		{"notcat", "not possible"},
+		{"bootcamprocks!", "not possible"},
+	}
 
-	fmt.Printf(`result %v, overflow %v`, result, overflow)
-
+	for _, v := range cases {
+		fmt.Println(assignment.WordSplit([2]string{v.given, words}))
+	}
 }
